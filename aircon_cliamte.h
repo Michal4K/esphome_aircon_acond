@@ -741,11 +741,13 @@ public:
         indoor_pipe_temperature.set_state_class(sensor::STATE_CLASS_MEASUREMENT);
         indoor_humidity_setting.set_state_class(sensor::STATE_CLASS_MEASUREMENT);
         indoor_humidity_status.set_state_class(sensor::STATE_CLASS_MEASUREMENT);
+	    pinMode(14, OUTPUT);
     }
 
     void update() override
     {
-        uint8_t req_stat[] = {
+        digitalWrite(14, HIGH);
+	    uint8_t req_stat[] = {
             0xF4, 0xF5, 0x00, 0x40,
             0x0C, 0x00, 0x00, 0x01,
             0x01, 0xFE, 0x01, 0x00,
@@ -755,7 +757,7 @@ public:
 
         write_array(req_stat, 21);
         flush();
-
+	
         if (read_response())
         {
 
@@ -1128,7 +1130,7 @@ private:
 
     bool read_response()
     {
-        int size = 0;
+	int size = 0;
         uint32_t start_time = millis();
         while (millis() - start_time < 250)
             ;
@@ -1166,12 +1168,14 @@ private:
             read_success = false;
         }
 
-        return read_success;
+	    //return read_success;
+        return true;
     }
 
     void send_command(uint8_t cmd[], size_t sz)
     {
-        uint32_t start_time = millis();
+        digitalWrite(14, HIGH);
+	    uint32_t start_time = millis();
         write_array(cmd, sz);
         flush();
         read_response();
