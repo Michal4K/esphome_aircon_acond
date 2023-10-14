@@ -931,11 +931,11 @@ public:
                 break;
             case climate::CLIMATE_MODE_COOL:
                 send_command(mode_cool, sizeof(mode_cool));
-                set_temp(cool_tgt_temp);
+                set_temp_c(cool_tgt_temp);
                 break;
             case climate::CLIMATE_MODE_HEAT:
                 send_command(mode_heat, sizeof(mode_heat));
-                set_temp(heat_tgt_temp);
+                set_temp_c(heat_tgt_temp);
                 break;
             case climate::CLIMATE_MODE_FAN_ONLY:
                 send_command(mode_fan, sizeof(mode_fan));
@@ -957,7 +957,7 @@ public:
             // User requested target temperature change
             float temp = *call.get_target_temperature();
 
-            set_temp(temp);
+            set_temp_c(temp);
 
             // Send target temp to climate
             target_temperature = temp;
@@ -1269,6 +1269,67 @@ private:
             break;
         case 86:
             send_command(temp_86_F, sizeof(temp_86_F));
+            break;
+        default:
+            break;
+        }
+    }
+
+    void set_temp_c(float temp)
+    {
+        uint8_t temp_c = roundf(temp);
+        switch (temp_c)
+        {
+        case 16:
+            send_command(temp_16_C, sizeof(temp_16_C));
+            break;
+        case 17:
+            send_command(temp_17_C, sizeof(temp_17_C));
+            break;
+        case 18:
+            send_command(temp_18_C, sizeof(temp_18_C));
+            break;
+        case 19:
+            send_command(temp_19_C, sizeof(temp_19_C));
+            break;
+        case 20:
+            send_command(temp_20_C, sizeof(temp_20_C));
+            break;
+        case 21:
+            send_command(temp_21_C, sizeof(temp_21_C));
+            break;
+        case 22:
+            send_command(temp_22_C, sizeof(temp_22_C));
+            break;
+        case 23:
+            send_command(temp_23_C, sizeof(temp_23_C));
+            break;
+        case 24:
+            send_command(temp_24_C, sizeof(temp_24_C));
+            break;
+        case 25:
+            send_command(temp_25_C, sizeof(temp_25_C));
+            break;
+        case 26:
+            send_command(temp_26_C, sizeof(temp_26_C));
+            break;
+        case 27:
+            send_command(temp_27_C, sizeof(temp_27_C));
+            break;
+        case 28:
+            send_command(temp_28_C, sizeof(temp_28_C));
+            break;
+        case 29:
+            send_command(temp_29_C, sizeof(temp_29_C));
+            break;
+        case 30:
+            send_command(temp_30_C, sizeof(temp_30_C));
+            break;
+        case 31:
+            send_command(temp_31_C, sizeof(temp_31_C));
+            break;
+        case 32:
+            send_command(temp_32_C, sizeof(temp_32_C));
             break;
         default:
             break;
