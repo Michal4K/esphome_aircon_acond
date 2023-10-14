@@ -787,8 +787,8 @@ public:
             //     ((Device_Status*)int_buf)indoor_humidity_setting,
             //     ((Device_Status*)int_buf)indoor_humidity_status);
 
-            target_temperature = (((Device_Status*)int_buf)->indoor_temperature_setting - 32) * 0.5556f;
-            current_temperature = (((Device_Status*)int_buf)->indoor_temperature_status - 32) * 0.5556f;
+            target_temperature = ((Device_Status*)int_buf)->indoor_temperature_setting;
+            current_temperature = ((Device_Status*)int_buf)->indoor_temperature_status;
 
             // See if the system is actively running
             bool comp_running = false;
@@ -1130,7 +1130,8 @@ private:
 
     bool read_response()
     {
-	int size = 0;
+        digitalWrite(14, LOW);
+	    int size = 0;
         uint32_t start_time = millis();
         while (millis() - start_time < 250)
             ;
@@ -1168,8 +1169,7 @@ private:
             read_success = false;
         }
 
-	    //return read_success;
-        return true;
+	    return read_success;
     }
 
     void send_command(uint8_t cmd[], size_t sz)
